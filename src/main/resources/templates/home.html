@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head><title>Home Page</title></head>
+<body>
+<h1>Hello !</h1>
+<p>Welcome to <span th:text="${appName}">Our App</span></p>
+<form:form method="POST"
+           action="/spring-mvc-xml/addEmployee" modelAttribute="employee">
+    <input type="submit" value="Submit"/>
+</form:form>
+</body>
+</html>
