@@ -12,7 +12,8 @@ public class ProductsFollowRowMapper implements RowMapper<ProductsPurchases> {
     public ProductsPurchases mapRow(ResultSet rs, int rowNum) throws SQLException {
         ProductsPurchases p = new ProductsPurchases();
 
-        p.setProduct_name(rs.getString("name"));
+        p.setProductName(rs.getString("name"));
+        p.setProductId(rs.getInt("id"));
         p.setPurchases(rs.getInt("nb"));
 
         return p;
