@@ -313,6 +313,7 @@ public class NoSQLController {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "password"));
         Session session = driver.session();
 
+        int maxResultRow = 100;
         ProductsFollowResponse response = new ProductsFollowResponse();
         List<ProductsPurchases> list = new ArrayList<>();
 
@@ -341,10 +342,12 @@ public class NoSQLController {
             long stopTime = System.nanoTime();
             response.setExecutionTime((stopTime - startTime) / Math.pow(10, 6));
 
-            while (result.hasNext()) {
+            int countResultRow = 0;
+            while (result.hasNext() && countResultRow <= maxResultRow) {
                 Record row = result.next();
                 ProductsPurchases p = new ProductsPurchases(row.get(0).asString(), row.get(1).asInt(), row.get(2).asInt());
                 list.add(p);
+                countResultRow++;
             }
         } catch (Exception e) {
             throw new ResponseStatusException(

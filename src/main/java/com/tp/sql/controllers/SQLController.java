@@ -285,15 +285,17 @@ public class SQLController {
             if (productId.isPresent()) {
                 query = String.format(query + " AND p.id = %d ", productId.get());
             }
-            query = query + " GROUP BY name;";
+            query = query + " GROUP BY name ORDER BY nb DESC;";
 
-            long startTime = System.nanoTime();
+            long startTime = System.currentTimeMillis();
             System.out.println(query);
+
+            jdbcTemplate.setMaxRows(10);
             listP = jdbcTemplate.query(
                     query, new ProductsFollowRowMapper());
-            long stopTime = System.nanoTime();
+            long stopTime = System.currentTimeMillis();
 
-            response.setExecutionTime((stopTime - startTime) / Math.pow(10, 6));
+            response.setExecutionTime((stopTime - startTime) / Math.pow(10, 3));
             response.setProductsPurchases(listP);
         } catch (Exception e) {
             throw new ResponseStatusException(
